@@ -121,4 +121,13 @@ public class XMLParserException extends Exception {
 		return super.getMessage();
 	}
 
+	public static class MultipleEntries extends XMLParserException {
+		public MultipleEntries(String msg) { super(msg); errorNr = 130; }
+		public MultipleEntries(Node node, String msg) { super(node, msg, 130); }
+		}
+
+	public static class ExpectationFailed extends XMLParserException {
+		public ExpectationFailed(String msg) { super(msg); errorNr = 123; }
+		public ExpectationFailed(Node node, String msg) { super(node, msg, 123); }
+		}
 } // XMLParserException

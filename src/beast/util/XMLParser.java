@@ -1069,9 +1069,11 @@ public class XMLParser {
             if (input.get() == input.defaultValue) {
                 beastObject.setInputValue(name, beastObject2);
             } else {
-                throw new XMLParserException("Multiple entries for non-list input " + input.getName());
+                throw new XMLParserException.MultipleEntries("Multiple entries for non-list input " + input.getName());
             }
             return;
+        } catch (XMLParserException e) {
+        	throw e;
         } catch (Exception e) {
         	if (name.equals("xml:base")) {
         		// ignore xml:base attributes introduces by XML entities
@@ -1084,10 +1086,10 @@ public class XMLParser {
                 } catch (Exception e2) {
                     // TODO: handle exception
                 }
-                throw new XMLParserException(node, e.getMessage() +
+                throw new XMLParserException.ExpectationFailed(node, e.getMessage() +
                         " expected '" + type +
                         "' but got '" + beastObject2.getClass().getName().replaceAll(".*\\.", "") + "'"
-                        , 123);
+                        );
             } else {
                 throw new XMLParserException(node, e.getMessage(), 130);
             }
